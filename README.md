@@ -27,7 +27,7 @@ The values chosen for N and dt are 10 and 0.1, respectively. Admittedly, this wa
 
 - **Polynomial Fitting and MPC Preprocessing**: *A polynomial is fitted to waypoints. If the student preprocesses waypoints, the vehicle state, and/or actuators prior to the MPC procedure it is described.*
 
-The waypoints are preprocessed by transforming them to the vehicle's perspective (see main.cpp lines 132-138). This simplifies the process to fit a polynomial to the waypoints because the vehicle's x and y coordinates are now at the origin (0, 0) and the orientation angle is also zero. 
+The waypoints are preprocessed by transforming them to the vehicle's perspective (see main.cpp lines 110-117). This simplifies the process to fit a polynomial to the waypoints because the vehicle's x and y coordinates are now at the origin (0, 0) and the orientation angle is also zero. 
 
 - **Model Predictive Control with Latency**: *The student implements Model Predictive Control that handles a 100 millisecond latency. Student provides details on how they deal with latency.*
 
