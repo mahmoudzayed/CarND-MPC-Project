@@ -21,8 +21,8 @@ The kinematic model includes the physical states of the vehicle which are x and 
 - **Timestep Length and Elapsed Duration (N & dt)**: *Student discusses the reasoning behind the chosen N (timestep length) and dt (elapsed duration between timesteps) values. Additionally the student details the previous values tried.*
 
 The values chosen for N and dt are 10 and 0.1, respectively. Admittedly, this was at the suggestion of Udacity's provided office hours for the project. I have tried several other parameter ((20, 0.05), (15, 0.05), (20, 0.7)) but they need too much tuning in the weights of the cost function and the performance is limited time constraints on real time system so 
-- we needed few points to have the least possible calculation time.
-- we need as much time as we can get so we give us a bigger (dt) but not to big we have a slow response/reaction time.
+ we needed few points to have the least possible calculation time.
+ we need as much time as we can get so we give us a bigger (dt) but not to big we have a slow response/reaction time.
 
 - **Polynomial Fitting and MPC Preprocessing**: *A polynomial is fitted to waypoints. If the student preprocesses waypoints, the vehicle state, and/or actuators prior to the MPC procedure it is described.*
 
