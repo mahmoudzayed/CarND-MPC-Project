@@ -1,6 +1,37 @@
 # CarND-Controls-MPC
 Self-Driving Car Engineer Nanodegree Program
 
+## Intro
+
+In this project we'll implement Model Predictive Control to drive the car around the track. We will calculate the cross track error and the appropriate velocity by getting telemetry and track waypoint data via websocket. We will provide a steering and acceleration commands back to the simulator to control the vehicle with the ability to compensate for a 100 millisecond latency between actuations commands on top of the connection latency.
+
+## Rubric Points
+
+- **The Model**: *Student describes their model in detail. This includes the state, actuators and update equations.*
+
+The kinematic model includes the physical states of the vehicle which are x and y coordinates, orientation angle (psi), and velocity, as well as the cross-track error and psi error. The control unit will acctuate the vehicle by providing acceleration and steering angle. The model combines the state and actuations from the previous timestep to calculate the state for the current timestep based on the equations below:
+
+      x_[t+1] = x[t] + v[t] * cos(psi[t]) * dt
+      y_[t+1] = y[t] + v[t] * sin(psi[t]) * dt
+      psi_[t+1] = psi[t] + v[t] / Lf * delta[t] * dt
+      v_[t+1] = v[t] + a[t] * dt
+      cte[t+1] = f(x[t]) - y[t] + v[t] * sin(epsi[t]) * dt
+      epsi[t+1] = psi[t] - psides[t] + v[t] * delta[t] / Lf * dt
+
+- **Timestep Length and Elapsed Duration (N & dt)**: *Student discusses the reasoning behind the chosen N (timestep length) and dt (elapsed duration between timesteps) values. Additionally the student details the previous values tried.*
+
+The values chosen for N and dt are 10 and 0.1, respectively. Admittedly, this was at the suggestion of Udacity's provided office hours for the project. I have tried several other parameter ((20, 0.05), (15, 0.05), (20, 0.7)) but they need too much tuning in the weights of the cost function and the performance is limited time constraints on real time system so 
+- we needed few points to have the least possible calculation time.
+- we need as much time as we can get so we give us a bigger (dt) but not to big we have a slow response/reaction time.
+
+- **Polynomial Fitting and MPC Preprocessing**: *A polynomial is fitted to waypoints. If the student preprocesses waypoints, the vehicle state, and/or actuators prior to the MPC procedure it is described.*
+
+The waypoints are preprocessed by transforming them to the vehicle's perspective (see main.cpp lines 132-138). This simplifies the process to fit a polynomial to the waypoints because the vehicle's x and y coordinates are now at the origin (0, 0) and the orientation angle is also zero. 
+
+- **Model Predictive Control with Latency**: *The student implements Model Predictive Control that handles a 100 millisecond latency. Student provides details on how they deal with latency.*
+
+All physical systems has a delay between the sensing and acting upon provided data. This delay sometimes cause several behaviours that contribute in the destabilization of the system if not accounted for properly. We have introduced a delay for 100ms to the simulated environment so we account for the time that the actuators need to take an action. To solve this issue, we estimate the position of the car based on its current speed and direction by propagating the position forward to the time expected by the actuator to take an action. Then the trajectory is determined and the control problem start to be solved from that vehicle position.
+
 ---
 
 ## Dependencies
